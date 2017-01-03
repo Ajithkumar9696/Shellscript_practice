@@ -35,3 +35,18 @@ sleep 1
 dd if=/dev/zero of=$1 bs=4096  count=1
 sleep 1
 (echo n;echo p;echo 1;echo;echo +64MB;echo n;echo p;echo 2;echo;echo;echo p;echo w) | fdisk $1
+partition=1
+device=$1$partition
+mkfs.vfat $device
+sync
+sleep 1
+
+partition=2
+device=$1$partition
+mkfs.ext3 $device
+sync
+sleep 1
+
+setterm -bold on
+echo "partition sucess"
+setterm -bold off
